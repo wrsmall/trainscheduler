@@ -5,16 +5,19 @@
     <title>Train Schedule</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Rye&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
 
 </head>
 
 <body>
-    <audio  controls autoplay>
-    <source src="assets/music/02 - Feathered Indians.mp3" type="audio/mpeg"> </audio>
-    <div class="row bg-secondary p-5 ml-2 mr-2 mt-3 rounded ">
-        <p class="specialelite text-center">Train Scheduler</p>
+
+    <div class="header bg-secondary p-5 ml-2 mr-2 mt-3 rounded title">
+        <p class="align text-center text-white h1 myfont">Train Scheduler</p>
     </div>
     <div class="container mt-5">
         <div class="row">
@@ -22,7 +25,7 @@
                 <div class="card-header bg-dark text-white ">
                     Train Schedule
                 </div>
-                <table class="table table-dark mt-2 w-90 rounded center">
+                <table class="table table-dark mt-2 w-90 rounded center" id="trainTable">
                     <thead>
                         <tr>
                             <th class="text-center" scope="col">Train</th>
@@ -30,8 +33,9 @@
                             <th class="text-center" scope="col">Frequency (min)</th>
                             <th class="text-center" scope="col">Next Arival</th>
                             <th class="text-center" scope="col">Minutes Away</th>
+                            <th class="text-center" scope="col">Remove Train</th>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center table-secondary text-dark myfont">
                     </tbody>
                 </table>
             </div>
@@ -48,26 +52,38 @@
                     <form class="center w-90">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Train</label>
-                            <input type="email" class="form-control" id="trainName" placeholder="Orient Express">
+                            <input class="form-control" id="trainName" placeholder="Orient Express">
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Destination</label>
-                            <input type="email" class="form-control" id="destination" placeholder="Budapest">
+                            <input class="form-control" id="destination" placeholder="Budapest">
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">First Train (HH:MM Military Time)</label>
-                            <input type="email" class="form-control" id="firstTrain" placeholder="13:00">
+                            <input class="form-control" id="firstTrain" placeholder="13:00">
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Train Frequency (Min)</label>
-                            <input type="email" class="form-control" id="trainFrequency" placeholder="15 min">
+                            <input class="form-control" id="trainFrequency" placeholder="15 min">
                         </div>
                     </form>
+                    <button id="addTrain" class="rounded w-25 bg-success m-3 myfont">Add Train</button>
                 </div>
             </div>
             <div class="col-lg-2"></div>
         </div>
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <audio class="center mt-3" controls autoplay="autoplay">
+                    <source src="assets/music/02 - Feathered Indians.mp3" type="audio/mpeg"> </audio>
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+    </div>
+    <script src="assets/javascript/logic.js"></script>
 </body>
 
 </html>

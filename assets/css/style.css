@@ -5,8 +5,15 @@
 
 .center{
     align-self: center;
-};
-.specialelite{
-    font-family: 'Special Elite', cursive;
-
 }
+
+.myfont{
+    font-family: 'Rye', cursive;
+}
+
+.align{
+    align-content: center;
+}
+
+
+
