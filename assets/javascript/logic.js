@@ -17,7 +17,7 @@ $("#addTrain").on("click", function (event) {
 
     var train = $("#trainName").val().trim();
     var destination = $("#destination").val().trim();
-    var firstTrain = moment($("#firstTrain").val().trim(), "HH:mm").format("X");
+    var firstTrain = $("#firstTrain").val().trim();
     var frequency = $("#trainFrequency").val().trim();
 
     var newTrain = {
@@ -41,24 +41,31 @@ $("#addTrain").on("click", function (event) {
     $("#firstTrain").val("");
     $("#trainFrequency").val("");
 });
+
 database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val());
-
+    var key = childSnapshot.key
+    console.log(key);
     // Store everything into a variable.
     var addTrain = childSnapshot.val().trainId;
     var addDestination = childSnapshot.val().destined;
     var addFirstTrain = childSnapshot.val().first;
     var addFrequency = childSnapshot.val().freq;
 
-    var trainFreq =addFrequency;
+    var trainFreq = addFrequency;
+    console.log(addFrequency)
     var startTime = addFirstTrain;
+    console.log(addFirstTrain)
     var convert = moment(startTime, "hh:mm").subtract(1, "years");
+    console.log(convert)
     var timeDiff = moment().diff(moment(convert), "minutes");
+    console.log(parseInt(timeDiff))
     var remainInter = timeDiff % trainFreq;
+    console.log(remainInter)
     var minutesRemain = trainFreq - remainInter;
-    
+
     console.log(minutesRemain)
-    
+
     var nextTrain = moment().add(minutesRemain, "minutes").format("hh:mm");
 
     console.log(nextTrain)
@@ -71,24 +78,27 @@ database.ref().on("child_added", function (childSnapshot) {
 
 
     // Create the new row
-    var newRow = $("<tr>").append(
+    var newRow = $(`<tr data='info'>`).append(
         $("<td>").text(addTrain),
         $("<td>").text(addDestination),
         $("<td>").text(addFrequency),
         $("<td>").text(nextTrain),
         $("<td>").text(minutesRemain),
-        $("<td>").html("<button id='removeTrain' class='rounded bg-danger'>" + "Remove Train" + "</button>"),
+        $("<td>").html(`<button data-key='${key}' class='remove rounded bg-danger'>Remove Train</button>`),
 
     );
 
-
-    // Append the new row to the table
-    $("#trainTable > tbody").append(newRow);
-
-    $("#removeTrain").on("click", function () {
-        ref.child($(this)).remove();
-
+    // 
+    $("body").on("click", '.remove', function () {
+        database.ref().child($(this).attr('data-key')).remove();
+        $($(this).closest("tr")).remove();
     });
 
+
+    $("#trainTable > tbody").append(newRow);
+
 });
+
+
+
 
